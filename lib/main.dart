@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:memoryz/Controllers/Auth_controller.dart';
 import 'package:memoryz/Themes/CustomTheme.dart';
+import 'package:memoryz/Utils/HomeBindings.dart';
 import 'package:memoryz/Views/Home.dart';
 import 'package:memoryz/Views/Login.dart';
 import 'package:memoryz/Views/Register.dart';
+import 'package:memoryz/Widgets/Loading.dart';
 import 'package:memoryz/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,12 +41,13 @@ class MyApp extends StatelessWidget {
         ? CustomTheme.customDarkTheme
         : CustomTheme.customLightTheme,
       
-      initialRoute: "/",
+      // initialRoute: "/",
+      home: const Loading(),
 
       getPages: [
         GetPage(name: "/", page: ()=> const Login()),
         GetPage(name: "/register", page: ()=> const Register()),
-        GetPage(name: "/home", page: ()=> const Home()),
+        GetPage(name: "/home", page: ()=> Home(), bindings: [HomeBindings()]),
       ],
     );
   }

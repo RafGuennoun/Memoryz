@@ -2,17 +2,38 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:memoryz/Models/UserModel.dart';
 import 'package:memoryz/Services/FirestoreUser.dart';
-import 'package:memoryz/Views/Home.dart';
 
 class AuthController extends GetxController {
 
-  // String username = '';
+  static AuthController instance = Get.find();
 
   bool loading = false;
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
   User? get userProfile => auth.currentUser;
+
+  late Rx<User?> firebaseUser;
+
+  @override
+  void onReady() {
+    super.onReady();
+    
+    firebaseUser = Rx<User?>(auth.currentUser);
+      
+    firebaseUser.bindStream(auth.userChanges());
+    ever(firebaseUser, _setInitialScreen);
+
+  }
+
+  _setInitialScreen(User? user) {
+    if (user == null) {
+      Get.offAllNamed("/login");
+    } else {
+      Get.offAllNamed("/home");
+        
+    }
+  }
 
 
   void register(String username, String email, String password) async {
@@ -62,8 +83,7 @@ class AuthController extends GetxController {
       
       loading = false;
       update();
-      Get.offAll(const Home());
-        // Get.offAllNamed("/home");
+      Get.offAllNamed("/home");
     } on FirebaseAuthException catch(e) {
       loading = false;
       update();
