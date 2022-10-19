@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "246324084893",
+    "project_id": "memoryz-7e8f9",
+    "storage_bucket": "memoryz-7e8f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246324084893:android:cc62a16456011775d19474",
+        "android_client_info": {
+          "package_name": "com.example.memoryz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246324084893-j12g1prbthimni77s19dm7dvniepd8ik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrW8Br9LOCHBLriJJEw-_9cc3MVQ2AzD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246324084893-j12g1prbthimni77s19dm7dvniepd8ik.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
