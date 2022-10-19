@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:memoryz/Themes/CustomTheme.dart';
+import 'package:memoryz/Views/Login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+SharedPreferences? prefs;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -10,13 +19,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Memoryz',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Container()
+
+      theme: prefs!.getBool("dark") == null 
+        ?  CustomTheme.customLightTheme
+        : prefs!.getBool("dark") == true 
+        ? CustomTheme.customDarkTheme
+        : CustomTheme.customLightTheme,
+        
+      home: const Login()
     );
   }
 }
