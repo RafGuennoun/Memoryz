@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:memoryz/Models/UserModel.dart';
 
-
 class FirestoreUser {
   final CollectionReference _usersCollectionRef = 
     FirebaseFirestore.instance.collection('Users');
@@ -11,5 +10,7 @@ class FirestoreUser {
       .doc(user.id)
       .set(user.toJson());
   }
+
+
 
 }

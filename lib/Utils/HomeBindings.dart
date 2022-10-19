@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:memoryz/Controllers/HomeController.dart';
+import 'package:memoryz/Controllers/Home_controller.dart';
 
 class HomeBindings implements Bindings{
   @override

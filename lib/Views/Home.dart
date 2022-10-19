@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:memoryz/Controllers/Auth_controller.dart';
-import 'package:memoryz/Controllers/HomeController.dart';
+import 'package:memoryz/Controllers/Home_controller.dart';
 import 'package:memoryz/Views/Memz.dart';
 import 'package:memoryz/Views/Post.dart';
 import 'package:memoryz/Views/Profil.dart';
@@ -14,9 +14,9 @@ class Home extends StatelessWidget {
   final homeController = Get.find<HomeController>();
 
   final pages = [
-    const Memz(),
+    Memz(),
     const Post(),
-    const Profil()
+    Profil()
   ];
 
   final double width = Get.width;
@@ -25,23 +25,41 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout_rounded),
-            onPressed: (){
-              authController.signOut();
-            }, 
-          )
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: const Text("Home"),
+      //   centerTitle: true,
+      //   actions: [
+      //     IconButton(
+      //       icon: const Icon(Icons.logout_rounded),
+      //       onPressed: (){
+      //         authController.signOut();
+      //       }, 
+      //     ),
+
+      //     GetBuilder<HomeController>(
+      //       init: HomeController(),
+      //       builder:(controller) => Switch(
+      //         value: controller.dark, 
+      //         onChanged: (e){
+      //           if (Get.isDarkMode) {
+      //             Get.changeTheme(CustomTheme.customLightTheme);
+      //             controller.switchTheme();
+      //             prefs!.setBool('dark', false);
+      //           } else {
+      //             Get.changeTheme(CustomTheme.customDarkTheme);
+      //             controller.switchTheme();
+      //             prefs!.setBool('dark', true);
+      //           }
+      //         }
+      //       )
+      //     )
+      //   ],
+      // ),
 
       body: SizedBox(
         width: width,
         height: height,
         child: GetBuilder<HomeController>(
-          init: HomeController(),
           builder: (controller) => pages[controller.currentIndex]
         ),
       ),

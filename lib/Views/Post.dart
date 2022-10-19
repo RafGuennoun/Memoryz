@@ -5,8 +5,10 @@ class Post extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text("Post"),
+    return const SafeArea(
+      child: Scaffold(
+        body: Text("Post"),
+      ),
     );
   }
 }

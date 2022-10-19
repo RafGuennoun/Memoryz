@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:memoryz/Models/ProfileModel.dart';
 import 'package:memoryz/Models/UserModel.dart';
+import 'package:memoryz/Services/FirestoreProfile.dart';
 import 'package:memoryz/Services/FirestoreUser.dart';
+import 'package:memoryz/Views/Login.dart';
 
 class AuthController extends GetxController {
 
@@ -43,9 +46,8 @@ class AuthController extends GetxController {
       update();
 
       await auth.createUserWithEmailAndPassword(email: email, password: password).then((value){
-        print("save to firestore");
         saveUserToFirestore(value, username);
-        print("saved to firestore -- succes");
+        initUserProfile(value);
       });
 
       loading = false;
@@ -115,7 +117,7 @@ class AuthController extends GetxController {
     try {
       await auth.signOut();
       update();
-      Get.offAllNamed("/");
+      Get.offAll( () => const Login());
     } catch (e) {
        Get.snackbar(
         "Une erreur est survenu",
@@ -131,6 +133,16 @@ class AuthController extends GetxController {
         email: user.user!.email,
         username: username,
         pic: "" 
+      )
+    );
+  }
+
+  initUserProfile(UserCredential user) async {
+    await FirestoreProfile().initProfileInFirestore(
+      ProfileModel(
+        id: user.user!.uid,
+        memz: 0,
+        likes: 0
       )
     );
   }
