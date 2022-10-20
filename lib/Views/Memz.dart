@@ -13,39 +13,9 @@ class Memz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout_rounded),
-            onPressed: (){
-              authController.signOut();
-            }, 
-          ),
+    return const Scaffold(
 
-          GetBuilder<HomeController>(
-            init: HomeController(),
-            builder:(controller) => Switch(
-              value: controller.dark, 
-              onChanged: (e){
-                if (Get.isDarkMode) {
-                  Get.changeTheme(CustomTheme.customLightTheme);
-                  controller.switchTheme();
-                  prefs!.setBool('dark', false);
-                } else {
-                  Get.changeTheme(CustomTheme.customDarkTheme);
-                  controller.switchTheme();
-                  prefs!.setBool('dark', true);
-                }
-              }
-            )
-          )
-        ],
-      ),
-      
-      body: const Text("Memz"),
+      body: Text("Memz"),
     );
   }
 }

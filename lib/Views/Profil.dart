@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:memoryz/Controllers/Profile_controller.dart';
+import 'package:memoryz/Views/PostData.dart';
 
 class Profil extends StatelessWidget {
   Profil({Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class Profil extends StatelessWidget {
                                 Column(
                                   children: [
                                     Text(
-                                      controller.profilData.memz.toString(),
+                                      controller.nbPostsData.toString(),
                                       style: Get.theme.textTheme.titleLarge,
                                     ),
                                     Text(
@@ -79,7 +80,7 @@ class Profil extends StatelessWidget {
                                 Column(
                                   children: [
                                     Text(
-                                      controller.profilData.likes.toString(),
+                                      controller.nbLikesData.toString(),
                                       style: Get.theme.textTheme.titleLarge,
                                     ),
                                     Text(
@@ -102,7 +103,7 @@ class Profil extends StatelessWidget {
 
                   const SizedBox(height: 15,),
 
-                  const Divider(thickness: 3 ,color: Colors.red,),
+                  const Divider(),
 
                   // const SizedBox(height: 15,),
 
@@ -111,43 +112,85 @@ class Profil extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Mes memz ",
+                        "Mes memoryz ",
                         style: Get.theme.textTheme.titleLarge,
                       ),
 
-                      IconButton(
-                        icon: const Icon(CupertinoIcons.list_bullet),
+                      GetBuilder<ProfileController>(
+                        builder: (controller) => IconButton(
+                        icon: controller.isList
+                        ? const Icon(CupertinoIcons.square_grid_2x2)
+                        : const Icon(CupertinoIcons.list_bullet),
                         onPressed: (){
-                          print("switch to wahda wahda");
+                          if (controller.isList) {
+                            controller.swithToGrid();
+                          } else {
+                            controller.swithToList();
+                          }
                         }, 
+                      )
                       )
                     ],
                   ),
 
-                  const SizedBox(height: 20,),
-
-                  GetX<ProfileController>(
+                  GetBuilder<ProfileController>(
                     builder: (controller) => SizedBox(
                       width: width,
-                      child: ListView.builder(
+                      child: controller.nbPostsData == 0
+                      ? const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        child: Text(
+                          "Vous n'avez pas encore de memoryz",
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                      : controller.isList
+                      ? ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: controller.postData.length,
                         itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Date : ${controller.postData[index].date}"),
-                                Text("Title : ${controller.postData[index].title}"),
-                                Text("Desc : ${controller.postData[index].desc}"),
-                                Text("likes : ${controller.postData[index].likes}"),
-                              ],
+                          return InkWell(
+                            child: Card(
+                              child: ListTile(
+                                title: Text(
+                                  controller.postData[index].title!,
+                                  style: Get.theme.textTheme.bodyMedium,
+                                ),
+                              ),
                             ),
+                            onTap: (){
+                              print("show with details");
+                              Get.to(PostData(post: controller.postData[index]));
+                            },
                           );
                         },
-                      ),
+                      )
+                      : GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: controller.postData.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2
+                        ), 
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            child: Card(
+                              child: Center(
+                                child: Text(
+                                  controller.postData[index].title!,
+                                  textAlign: TextAlign.center,
+                                  style: Get.theme.textTheme.bodyMedium,
+                                ),
+                              ),
+                            ),
+                            onTap: (){
+                              print("show with details");
+                              Get.to(PostData(post: controller.postData[index]));
+                            },
+                          );
+                        },
+                      )
                     )
 
                   )
