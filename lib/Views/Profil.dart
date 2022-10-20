@@ -123,16 +123,35 @@ class Profil extends StatelessWidget {
                       )
                     ],
                   ),
-                  // StreamBuilder(
-                  //   stream: usersStream,
-                  //   builder:(context, AsyncSnapshot<QuerySnapshot> snapshot){
-                  //     if (!snapshot.hasData) {
-                  //       return const Text('Makach data');
-                  //     } else {
-                  //       return Text("data = ${(snapshot.data!.docs[0])['likes']}");
-                  //     }
-                  //   }
-                  // ),
+
+                  const SizedBox(height: 20,),
+
+                  GetX<ProfileController>(
+                    builder: (controller) => SizedBox(
+                      width: width,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.postData.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Date : ${controller.postData[index].date}"),
+                                Text("Title : ${controller.postData[index].title}"),
+                                Text("Desc : ${controller.postData[index].desc}"),
+                                Text("likes : ${controller.postData[index].likes}"),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    )
+
+                  )
+                
 
                   
 

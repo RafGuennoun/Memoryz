@@ -15,7 +15,7 @@ class Home extends StatelessWidget {
 
   final pages = [
     Memz(),
-    const Post(),
+    Post(),
     Profil()
   ];
 
